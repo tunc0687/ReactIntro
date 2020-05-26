@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Table} from 'reactstrap'
+import { Table } from 'reactstrap'
 
 export default class ProductList extends Component {
 
@@ -11,18 +11,24 @@ export default class ProductList extends Component {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Stock</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
+                        {
+                            this.props.products.map((product,i) => (
+                                <tr key={product.id}>
+                                    <th scope="row">{i+1}</th>
+                                    <td>{product.productName}</td>
+                                    <td>{product.quantityPerUnit}</td>
+                                    <td>{product.unitPrice}</td>
+                                    <td>{product.unitsInStock}</td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </Table>
             </div>

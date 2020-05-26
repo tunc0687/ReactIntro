@@ -6,16 +6,34 @@ import { Container, Row, Col } from 'reactstrap';
 
 export default class App extends Component {
   state = {
-    currentCategory: ""
+    products: [],
+    selectCategory: ""
+  }
+
+  componentDidMount(){
+    this.getProducts(null);
+  }
+
+  getProducts = (id) => {
+    let url;
+    if (id == null) {
+      url = "http://localhost:3000/products";
+    } else {
+      url = `http://localhost:3000/products?categoryId=${id}`;
+    }
+    fetch(url)
+      .then(response => response.json())
+      .then(data => this.setState({ products: data }))
   }
 
   changeCategory = (category) => {
-    this.setState({ currentCategory: category.categoryName })
+    this.setState({ selectCategory: category.categoryName })
+    this.getProducts(category.id)
   }
 
   render() {
-    let productInfo = { title: "Product List", currentCategory: this.state.currentCategory };
-    let categoryInfo = { title: "Category List", currentCategory: this.state.currentCategory };
+    let productInfo = { title: "Product List", currentCategory: this.state.selectCategory };
+    let categoryInfo = { title: "Category List" };
 
     return (
       <div>
@@ -28,7 +46,7 @@ export default class App extends Component {
               <CategoryList changeCategory={this.changeCategory} info={categoryInfo} />
             </Col>
             <Col xs="9">
-              <ProductList info={productInfo} />
+              <ProductList products= {this.state.products} info={productInfo} />
             </Col>
           </Row>
         </Container>
