@@ -3,6 +3,7 @@ import Navi from './Navi';
 import CategoryList from './CategoryList';
 import ProductList from './ProductList';
 import { Container, Row, Col } from 'reactstrap';
+import alertifyjs from 'alertifyjs';
 
 export default class App extends Component {
   state = {
@@ -16,6 +17,7 @@ export default class App extends Component {
   componentDidMount() {
     this.getProducts()
   }
+
 
   getProducts = (id) => {
     let url = "http://localhost:3000/products";
@@ -44,8 +46,17 @@ export default class App extends Component {
     let total = this.state.totalCart + parseFloat(product.unitPrice);
     this.setState({ totalCart: total });
     this.setState({ count: this.state.count + 1 });
+    alertifyjs.success(product.productName + " add to carts", 2);
+  }
 
-    console.log(this.state.carts);
+  deleteCart = (product)=>{
+    let newCarts = this.state.carts.filter(prd => prd.id !== product.id);
+    this.setState({carts: newCarts});
+
+    let total = this.state.totalCart - parseFloat(product.unitPrice) * product.piece;
+    this.setState({ totalCart: total });
+
+    this.setState({ count: this.state.count - product.piece });
   }
 
 
@@ -56,8 +67,8 @@ export default class App extends Component {
 
     return (
       <div>
+        <Navi deleteCart={this.deleteCart} info={cartInfo} />
         <Container>
-          <Navi info={cartInfo} />
           <Row>
             <Col xs="3">
               <CategoryList changeCategory={this.changeCategory} info={categoryInfo} />

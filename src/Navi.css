@@ -1,0 +1,26 @@
+#bag {
+    cursor: pointer;
+    position: relative;
+    width: 125px;
+    height: 40px;
+}
+
+#count {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 3px;
+    left: 8px;
+}
+
+
+#card-bag {
+    background-color: rgb(250, 228, 199);
+    display: none;
+    width: 350px;
+    height: auto;
+    position: absolute;
+    top: 50px;
+    right: 120px;
+    z-index: 100;
+}
