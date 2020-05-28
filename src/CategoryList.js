@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ListGroup, ListGroupItem } from 'reactstrap'
+import { Link } from 'react-router-dom'
 
 export default class CategoryList extends Component {
     state = {
@@ -20,21 +21,22 @@ export default class CategoryList extends Component {
         return (
             <div>
                 <h4>{this.props.info.title}</h4>
-                <ListGroup>
-                    {
-                        this.state.categories.map(category => (
-                            <ListGroupItem
-                            style={{cursor: "pointer"}}
-                            active={category.categoryName === this.props.info.currentCategory} 
-                            onClick={() => this.props.changeCategory(category)}
-                            key={category.id}>
+                <Link style={{textDecoration:"none"}} to="/">
+                    <ListGroup>
+                        {
+                            this.state.categories.map(category => (
+                                <ListGroupItem
+                                active={category.categoryName === this.props.info.currentCategory} 
+                                onClick={() => this.props.changeCategory(category)}
+                                key={category.id}>
 
-                                {category.categoryName}
-                                
-                            </ListGroupItem>
-                        ))
-                    }
-                </ListGroup>
+                                    {category.categoryName}
+                                    
+                                </ListGroupItem>
+                            ))
+                        }
+                    </ListGroup>
+                </Link>
             </div>
         )
     }

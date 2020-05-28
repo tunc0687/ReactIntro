@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
-import Navi from './Navi';
-import CategoryList from './CategoryList';
-import ProductList from './ProductList';
-import { Container, Row, Col } from 'reactstrap';
-import alertifyjs from 'alertifyjs';
+import Navi from './Navi'
+import CategoryList from './CategoryList'
+import ProductList from './ProductList'
+import { Container, Row, Col } from 'reactstrap'
+import alertifyjs from 'alertifyjs'
+import { Switch, Route } from 'react-router-dom'
+import CartList from './CartList'
+import NotFound from './NotFound'
+import FormDemo from './FormDemo'
+
 
 export default class App extends Component {
   state = {
@@ -15,7 +20,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.getProducts()
+    this.getProducts();
+    document.querySelector("#card-bag").style.display = "none";
   }
 
 
@@ -45,18 +51,20 @@ export default class App extends Component {
 
     let total = this.state.totalCart + parseFloat(product.unitPrice);
     this.setState({ totalCart: total });
+
     this.setState({ count: this.state.count + 1 });
     alertifyjs.success(product.productName + " add to carts", 2);
   }
 
-  deleteCart = (product)=>{
+  deleteCart = (product) => {
     let newCarts = this.state.carts.filter(prd => prd.id !== product.id);
-    this.setState({carts: newCarts});
+    this.setState({ carts: newCarts });
 
-    let total = this.state.totalCart - parseFloat(product.unitPrice) * product.piece;
+    let total = this.state.totalCart - parseFloat(product.unitPrice * product.piece);
     this.setState({ totalCart: total });
 
     this.setState({ count: this.state.count - product.piece });
+    alertifyjs.error(product.productName + " removed from carts", 2);
   }
 
 
@@ -74,7 +82,15 @@ export default class App extends Component {
               <CategoryList changeCategory={this.changeCategory} info={categoryInfo} />
             </Col>
             <Col xs="9">
-              <ProductList addCart={this.addToCart} products={this.state.products} info={productInfo} />
+              <Switch>
+                <Route exact path="/">
+                  <ProductList addCart={this.addToCart} products={this.state.products} info={productInfo} />
+                </Route>
+                <Route path="/cart"> <CartList deleteCart={this.deleteCart} info={cartInfo} /> </Route>
+                <Route path="/formdemo"> <FormDemo/> </Route>
+                <Route> <NotFound/> </Route>
+              </Switch>
+
             </Col>
           </Row>
         </Container>
