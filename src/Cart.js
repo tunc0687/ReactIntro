@@ -19,7 +19,7 @@ export default class Cart extends Component {
                     <Link className="navbar-brand mr-5" to="/">TUNCSA</Link>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <Link className="nav-link" to="/Admin">Admin Paneli</Link>
+                            <Link className="nav-link" to="/admin">Admin Paneli</Link>
                         </li>
                         <li className="nav-item active">
                             <Link className="nav-link" to="/formdemo">Form Demo</Link>

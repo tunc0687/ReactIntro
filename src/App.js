@@ -8,6 +8,7 @@ import { Switch, Route } from 'react-router-dom'
 import CartList from './CartList'
 import NotFound from './NotFound'
 import FormDemo from './FormDemo'
+import Admin from './Admin'
 
 
 export default class App extends Component {
@@ -88,6 +89,7 @@ export default class App extends Component {
                 </Route>
                 <Route path="/cart"> <CartList deleteCart={this.deleteCart} info={cartInfo} /> </Route>
                 <Route path="/formdemo"> <FormDemo/> </Route>
+                <Route path="/admin"> <Admin/> </Route>
                 <Route> <NotFound/> </Route>
               </Switch>
 
